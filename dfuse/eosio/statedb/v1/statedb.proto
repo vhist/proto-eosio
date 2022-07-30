@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package dfuse.eosio.statedb.v1;
 
-option go_package = "github.com/zhongshuwen/histexp/pb/dfuse/eosio/statedb/v1;pbstatedb";
+option go_package = "github.com/zhongshuwen/historyexp/pb/dfuse/eosio/statedb/v1;pbstatedb";
 
 import "dfuse/bstream/v1/bstream.proto";
 

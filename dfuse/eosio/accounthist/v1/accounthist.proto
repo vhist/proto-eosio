@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package dfuse.eosio.accounthist.v1;
 
-option go_package = "github.com/zhongshuwen/histexp/pb/dfuse/eosio/accounthist/v1;pbaccounthist";
+option go_package = "github.com/zhongshuwen/historyexp/pb/dfuse/eosio/accounthist/v1;pbaccounthist";
 
 import "dfuse/eosio/codec/v1/codec.proto";
 

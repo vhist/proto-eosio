@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package dfuse.eosio.itemmeta.v1;
 
-option go_package = "github.com/zhongshuwen/histexp/pb/dfuse/eosio/itemmeta/v1;pbitemmeta";
+option go_package = "github.com/zhongshuwen/historyexp/pb/dfuse/eosio/itemmeta/v1;pbitemmeta";
 
 service ItemMeta {
   rpc GetItems(GetItemsRequest) returns (ItemsResponse);
