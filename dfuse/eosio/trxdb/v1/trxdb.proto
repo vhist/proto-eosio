@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package dfuse.eosio.trxdb.v1;
 
-option go_package = "github.com/dfuse-io/dfuse-eosio/pb/dfuse/eosio/trxdb/v1;pbtrxdb";
+option go_package = "github.com/zhongshuwen/historyexp/pb/dfuse/eosio/trxdb/v1;pbtrxdb";
 
 import "dfuse/eosio/codec/v1/codec.proto";
 import "google/protobuf/timestamp.proto";

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package dfuse.eosio.tokenmeta.v1;
 
-option go_package = "github.com/dfuse-io/dfuse-eosio/pb/dfuse/eosio/tokenmeta/v1;pbtokenmeta";
+option go_package = "github.com/zhongshuwen/historyexp/pb/dfuse/eosio/tokenmeta/v1;pbtokenmeta";
 
 service TokenMeta {
   rpc GetTokens(GetTokensRequest) returns (TokensResponse);
