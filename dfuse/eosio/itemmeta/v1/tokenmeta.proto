@@ -1,0 +1,140 @@
+syntax = "proto3";
+
+package dfuse.eosio.itemmeta.v1;
+
+option go_package = "github.com/zhongshuwen/histexp/pb/dfuse/eosio/itemmeta/v1;pbitemmeta";
+
+service ItemMeta {
+  rpc GetItems(GetItemsRequest) returns (ItemsResponse);
+  rpc GetAccountBalances(GetAccountBalancesRequest) returns (AccountBalancesResponse);
+  rpc GetItemBalances(GetItemBalancesRequest) returns (ItemBalancesResponse);
+}
+
+message GetTItemsRequest {
+  uint32 limit = 1; // 0 means all
+  SortOrder sort_order = 2;
+  SortField sort_field = 3;
+  SortOrder secondary_sort_order = 8;
+  SortField secondary_sort_field = 9;
+
+  ItemCursor before_cursor = 6;
+  ItemCursor after_cursor = 7;
+
+  // you can sort by either: Symbol alphanumerically, holder count, market cap
+  enum SortField {
+    NONE = 0;
+    ALPHA = 1;
+    HOLDERS = 2;
+  }
+}
+
+message ItemsResponse {
+  repeated Item items = 1;
+  uint64 atBlockNum = 2;
+  string atBlockId = 3;
+}
+
+message Item {
+  uint64 item_id = 1;
+  string symbol = 2;            // from maximum_supply or total_supply
+  uint32 precision = 3;         // from maximum supply or total supply
+  string issuer = 4;            // from `stat` table
+  uint64 maximum_supply = 5;    // from `stat` table
+  uint64 total_supply = 6;      // from `stat` table
+  uint64 holders = 7;           // present on `block_dog`, could be fetched from `scopes` from `fluxdb`, and kept in sync with block logs.
+
+  // Eventually:
+  uint64 market_cap = 8;        // In USD cents (precision = 2). Taken from some exchanges or whatnot. Zero means unknown.
+  string website = 9;           // URL to the website, according to whatever site.
+  string logo = 10;             // URL to a logo, hosted somewhere
+}
+
+message GetAccountBalancesRequest {
+  string account = 1; // Get all Assets contract.symbol for a given account (eoscanadadad)
+  uint32 limit = 2;   // 0 means all
+  SortOrder sort_order = 3;
+  SortField sort_field = 4;
+  SortOrder secondary_sort_order = 10;
+  SortField secondary_sort_field = 11;
+
+  AccountBalanceCursor before_cursor = 7;
+  AccountBalanceCursor after_cursor = 8;
+
+  // You can sort by either: Symbol alphanumerically, Item Amount, market value of items
+  enum SortField {
+    NONE = 0;
+    ALPHA = 1;
+    AMOUNT = 2;
+  }
+
+}
+
+message AccountBalancesResponse {
+  repeated AccountBalance balances = 1;
+  uint64 atBlockNum = 2;
+  string atBlockId = 3;
+}
+
+message GetItemBalancesRequest {
+  uint64 item_id = 1;
+  uint32 limit = 2; // 0 means all
+  SortOrder sort_order = 3;
+  SortField sort_field = 4;
+  SortOrder secondary_sort_order = 10;
+  SortField secondary_sort_field = 11;
+
+
+  AccountBalanceCursor before_cursor = 7;
+  AccountBalanceCursor after_cursor = 8;
+
+  // You can sort by either: Account alphanumerically, Item Amount, market value of items
+  enum SortField {
+    NONE = 0;
+    ALPHA = 1;
+    AMOUNT = 2;
+  }
+
+}
+
+message ItemBalancesResponse {
+  repeated ItemContractBalancesResponse items = 1; // All if none
+  uint64 atBlockNum = 2;
+  string atBlockId = 3;
+}
+
+message ItemContractBalancesResponse {
+  Item item = 1;
+  repeated AccountBalance balances = 2;
+}
+
+
+message AccountBalance {
+  uint64 item_id = 1;
+  string account = 2;
+
+  uint64 amount = 3;
+  uint64 item_template_id = 4;
+  uint64 collection_id = 5;
+}
+
+enum SortOrder {
+  ASC = 0;
+  DESC = 1;
+}
+
+message TransactionCursor {
+  int32 ver = 1;
+  uint32 transactionIndex = 2;
+  string transactionHash = 3;
+}
+
+message ItemCursor {
+  int32 ver = 1;
+  uint64 item_id = 2;
+}
+
+message AccountBalanceCursor {
+  int32 ver = 1;
+  uint64 item_id = 2;
+  string account = 3;
+}
